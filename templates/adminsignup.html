@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Form Validation</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      crossorigin="anonymous"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        /* *{
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+        }
+        button{
+            padding: 8px;
+            width: 130px;
+        }
+        .name{
+            background-color: rgb(127, 232, 255);
+        }
+        .active{
+            color: rgb(255, 0, 0);
+        } */
+         *{
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+         }
+         body{
+            font-family: sans-serif;
+         }
+         form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-width: 400px;
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.66);
+            padding: 40px;
+            border-radius: 15px;
+         }
+         .title{
+            font-size: 25px;
+            font-weight: bold;
+            margin-bottom: 20px;
+         }
+         label{
+            display: block;
+            margin-bottom: 5px;
+         }
+         form div input{
+            width: 100%;
+            height: 40px;
+            border-radius: 8px;
+            outline: none;
+            border: 2px solid #c4c4c4;
+            padding: 0 30px;
+            box-shadow: 2px 2px 4px rgpa(0,0,0,0.1);
+         }
+         form div{
+            position: relative;
+            margin-bottom: 15px;
+         }
+         input:focus{
+            border: 2px solid #f2796e;
+         }
+         form div i{
+            position: absolute;
+            padding: 10px;
+         }
+        
+         .failure-icon,
+         .error{
+            color: red;
+         }
+         .success-icon{
+            color: green;
+         }
+         .error{
+            font-size: 14.5px;
+            margin-top: 5px;
+         }
+         .success-icon,.failure-icon{
+            right: 0;
+            opacity: 0;
+         }
+         button {
+            margin-top: 15px;
+            width: 50%;
+            height: 45px;
+            background-color: #f2796e;
+            border: 2px solid #f2796e;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 2px 2px 4px rgpa(0,0,0,0.1);
+            transition: all 0.1s ease;
+            
+         }
+         .btnbox{
+            display: flex;
+            gap: 5%;
+         }
+         .btnactive:active{
+            transform: scale(1.1);
+         }
+         button:hover{
+            opacity: 0.8;
+         }
+         .container{
+           margin-left: 35%;
+           margin-top:3%
+         }
+         .radio{
+            width: 100%;
+            display: flex;
+         }
+         .radio section{
+            width: 50%;
+            display: flex;
+            align-items: center;
+            gap: 5%;
+         }.radio input{
+            width: 22px;
+         }
+         .radio label{
+               margin-top: 7%;
+         }
+         .already{
+            text-decoration: none;
+            text-align: center;
+         }
+        
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <form id="form" method="POST" action="{% url 'adminsignup' %}">
+        {% csrf_token %}
+        <div class="title">Signup form ...</div>
+
+
+        <div>
+          <label for="username">Name :</label>
+          <i class="fas fa-user"></i>
+
+          <input
+            type="text"
+            name="username"
+            id="username"
+            placeholder="Enter you name..."
+          />
+
+          <i class="fas fa-exclamation-circle failure-icon"></i>
+          <i class="far fa-check-circle success-icon"></i>
+
+          <div class="error"></div>
+        </div>
+
+        <div>
+          <label for="email">Email :</label>
+          <i class="far fa-envelope"></i>
+
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="abc@gmail.com"
+          />
+
+          <i class="fas fa-exclamation-circle failure-icon"></i>
+          <i class="far fa-check-circle success-icon"></i>
+
+          <div class="error"></div>
+        </div>
+
+        <div>
+          <label for="password">Password :</label>
+          <i class="fas fa-lock"></i>
+
+          <input
+            type="password"
+            name="password1"
+            id="password"
+            placeholder="Password here"
+          />
+
+          <i class="fas fa-exclamation-circle failure-icon"></i>
+          <i class="far fa-check-circle success-icon"></i>
+
+          <div class="error"></div>
+        </div>
+        <div>
+            <label for="password2">Conform Password :</label>
+            <i class="fas fa-lock"></i>
+  
+            <input
+              type="password"
+              name="password2"
+              id="password2"
+              placeholder="Conform Password"
+            />
+  
+            <i class="fas fa-exclamation-circle failure-icon"></i>
+            <i class="far fa-check-circle success-icon"></i>
+  
+            <div class="error"></div>
+          </div>
+        <div class="radio">
+            <section> 
+            <input
+              type="radio"
+              name="role"
+              id = "radio1"
+              value="customer"
+            />
+            <label for="radio1">CUSTOMER</label>
+            </section>
+                  <section>
+               <input
+              type="radio"
+              name="role"
+              id = "radio2"
+              value="seller"
+            />
+            <label for="radio2">SELLER</label>
+            </section>
+
+        </div>
+          
+          
+            <div class="btnbox">
+        <button class="btnactive" id="btn" type="submit">Submit</button>
+        <button class="btnactive" type="reset"> Reset</button>
+            </div>
+         <a class="already" href="{% url 'adminlogin' %}">Already have a account...?</a>
+      </form>
+    </div>
+    <!-- <script>
+      
+let id = (id) => document.getElementById(id);
+let classes = (classes) => document.getElementsByClassName(classes);
+let username = id("username"),
+email = id("email"), 
+password = id("password"),
+password2 =id('password2'),
+form =id("form"),
+errorMsg = classes("error"),
+successIcon = classes("success-icon"),
+failureIcon = classes("failure-icon");
+
+
+form.addEventListener("submit",(e) =>
+{e.preventDefault();
+   if(username.value!="" && email.value!="" && password.value!="" && password2.value!=""){
+      
+      e.currentTarget.submit();
+
+   }else {
+      
+      engine(username, 0, "user name cannot be blank")
+      engine(email, 1, "Email cannot be blank")
+      engine(password, 2, "password cannot be blank")
+      engine(password2,3,"conform password cannot be blank")
+   }
+});
+
+let engine = (id, serial,message) => {
+    if (id.value.trim() === ""){
+        errorMsg[serial].innerHTML = message;
+        id.style.border = "2px solid red";
+
+        failureIcon[serial].style.opacity = "1";
+        successIcon[serial].style.opacity = "0"
+    }
+    else{
+        errorMsg[serial].innerHTML = "";
+        id.style.border = "2px solid green"
+
+        failureIcon[serial].style.opacity = "0";
+        successIcon[serial].style.opacity = "1"        
+    }
+};
+    </script> -->
+  </body>
+</html>

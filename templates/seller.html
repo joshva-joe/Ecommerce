@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/seller.css' %}">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="navbar-left">
+        {% if seller and seller_profile and seller_profile.profile %}
+            <div class="profile-box">
+                <img src="{{ seller_profile.profile.url }}" alt="Profile Image" class="profile-img">
+                <span class="username">{{ seller.username }}</span>
+            </div>
+        {% else %}
+            <span class="username">Welcome {{seller.username}}</span>
+        {% endif %}
+    </div>
+    <div class="navbar-right">
+        <a href="{% url 'add_product' %}" class="add-product-btn">+ Add Product</a>
+        <a href="{% url 'adminlogin' %}" class="add-product-btn">Logout</a>
+    </div>
+</nav>
+
+<div class="container">
+    <h2>Your Products</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <!-- <th>Product ID</th> -->
+                <th>Category</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Image</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.product_name }}</td>
+                <!-- <td>{{ product.product_id }}</td> -->
+                <td>{{ product.category }}</td>
+                <td>₹{{ product.price }}</td>
+                <td>{{ product.stock }}</td>
+                <td>
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.product_name }}" class="product-img">
+                    {% else %}
+                        <span>No Image</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a class="edit-btn" href="{% url 'edit_product' product.product_id %}">Edit</a>
+
+                    <form action="{% url 'delete_product' product.product_id %}" method="post" style="display:inline;" onsubmit="return confirmDelete(event)">
+                        {% csrf_token %}
+                        <button type="submit" class="delete-btn">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7">No products added yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- SweetAlert messages -->
+<script>
+    {% if messages %}
+        {% for message in messages %}
+            Swal.fire({
+                icon: '{% if message.tags == "error" %}error{% else %}success{% endif %}',
+                title: '{{ message|escapejs }}',
+                showConfirmButton: false,
+                timer: 2000
+            });
+        {% endfor %}
+    {% endif %}
+</script>
+
+<!-- Confirm before delete -->
+<script>
+    function confirmDelete(event) {
+        event.preventDefault();
+        const form = event.target;
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "This product will be permanently deleted.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#aaa',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            }
+        });
+
+        return false;
+    }
+</script>
+
+</body>
+</html>

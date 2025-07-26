@@ -1,0 +1,43 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+    <link rel="stylesheet" href="{% static 'css/add_products.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>Add a New Product</h2>
+        <form method="POST" enctype="multipart/form-data" action="{% url 'add_product' %}">
+            {% csrf_token %}
+            
+            <label>Product Name:</label>
+            <input type="text" name="product_name" required>
+
+            <label>Product id:</label>
+            <input type="text" name="product_id" required>
+
+            <label>Category:</label>
+            <input type="text" name="category" required>
+
+            <label>Price:</label>
+            <input type="number" name="price" step="0.01" required>
+
+            <label>Stock:</label>
+            <input type="number" name="stock" required>
+
+            <label>Description:</label>
+            <textarea name="description"></textarea>
+
+            <label>Upload Image:</label>
+            <input type="file" name="image">
+
+            <button type="submit" class="add-product-btn">Add Product</button>
+
+        </form>
+    </div>
+</body>
+</html>

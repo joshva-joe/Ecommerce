@@ -1,0 +1,42 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Profile</title>
+    <link rel="stylesheet" href="{% static 'css/selleradd.css' %}">
+</head>
+<body>
+    
+    <div class="container">
+        <h2>Complete Your Seller Profile</h2>
+        <form enctype="multipart/form-data" method="POST" action="{% url 'seller_add' %}">
+            {% csrf_token %}
+
+            <label for="seller_name">Seller Name:</label>
+            <input type="text" id="seller_name" name="seller_name" required>
+
+            <label for="seller_email">Email:</label>
+            <input type="email" id="seller_email" name="seller_email" required>
+
+            <label for="shop_name">Shop Name:</label>
+            <input type="text" id="shop_name" name="shop_name" required>
+
+            <label for="seller_phone">Phone Number:</label>
+            <input type="text" id="seller_phone" name="seller_phone" required>
+
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" required>
+            <div>
+            <label>Profile:</label><br/>
+            <input type="file"  name="profile" required>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+</body>
+</html>

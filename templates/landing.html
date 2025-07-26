@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopEase - Explore Products</title>
+    <link rel="stylesheet" href="{% static 'css/customer.css' %}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">VIGNESH Supermarket</div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Categories</a>
+            <a href="{% url 'adminlogin' %}" class="logout-btn">Logout</a>
+            <a href="{% url 'adminsignup' %}" class="logout-btn">Signup</a>
+            
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <h1>Find Your Perfect Product in VIGNESH Supermarket</h1>
+        <p>Explore a world of premium quality items at the best prices.</p>
+    </section>
+
+    <div class="product-container">
+        <img src="" alt="">
+    </div>
+</body>
+</html>

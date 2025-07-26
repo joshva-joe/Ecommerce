@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Product</title>
+    <link rel="stylesheet" href="{% static 'css/edit_product.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>Edit Product</h2>
+            <form method="POST" enctype="multipart/form-data" action="{% url 'edit_product' product.product_id %}">
+            {% csrf_token %}
+            
+            <label>Product Name:</label>
+            <input type="text" name="product_name" value="{{ product.product_name }}" required>
+
+            <label>Category:</label>
+            <input type="text" name="category" value="{{ product.category }}" required>
+
+            <label>Price:</label>
+            <input type="number" name="price" step="0.01" value="{{ product.price }}" required>
+
+            <label>Stock:</label>
+            <input type="number" name="stock" value="{{ product.stock }}" required>
+
+            <label>Description:</label>
+            <textarea name="description">{{ product.description }}</textarea>
+
+            <label>Current Image:</label>
+            {% if product.image %}
+                <img src="{{ product.image.url }}" alt="Product Image" class="product-image-preview">
+            {% endif %}
+
+            <label>Upload New Image:</label>
+            <input type="file" name="image">
+
+            <button type="submit" class="edit-product-btn">Update Product</button>
+        </form>
+    </div>
+</body>
+</html>

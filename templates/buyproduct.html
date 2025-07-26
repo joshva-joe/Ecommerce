@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy {{ product.product_name }}</title>
+    <link rel="stylesheet" href="{% static 'css/buyproduct.css' %}">
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">Super Mart</div>
+    <div class="nav-links">
+        <a href="{% url 'homepage' %}">Home</a>
+        <a href="#">Categories</a>
+        <a href="#">Profile</a>
+        <a href="{% url 'adminlogin' %}" class="logout-btn">Logout</a>
+    </div>
+</nav>
+
+<div class="buy-product-container">
+    <h2>{{ product.product_name }}</h2>
+
+    <div class="product-details">
+        <img src="{{ product.image.url }}" alt="{{ product.product_name }}" class="product-img">
+        <div class="details">
+            <p><strong>Category:</strong> {{ product.category }}</p>
+            <p><strong>Price:</strong> ₹{{ product.price }}</p>
+            <p><strong>Stock:</strong> {{ product.stock }}</p>
+        </div>
+    </div>
+
+    <form method="POST" action="{% url 'order' product.product_id %}">
+        {% csrf_token %}
+        <label for="customer_number">Mobile No:</label>
+        <input type="tel" name="customer_number" placeholder="Enter your mobile number" required>
+
+        <label for="customer_name">Customer Name:</label>
+        <input type="text" name="customer_name" placeholder="Enter your full name" required>
+
+        <label for="customer_email">Email:</label>
+        <input type="email" name="customer_email" placeholder="Enter your email" required>
+
+        <label for="address">Address:</label>
+        <textarea name="address" placeholder="Enter your delivery address" required></textarea>
+
+        <label for="quantity">Quantity:</label>
+        <input type="number" name="quantity" min="1" max="{{ product.stock }}" required>
+
+        <button type="submit" class="buy-btn">Place Order</button>
+    </form>
+</div>
+
+<!-- SweetAlert popup for success/failure message -->
+{% if messages %}
+<script>
+    {% for message in messages %}
+        Swal.fire({
+            icon: 'success',
+            title: '{{ message|escapejs }}',
+            showConfirmButton: false,
+            timer: 2000
+        });
+    {% endfor %}
+</script>
+{% endif %}
+
+</body>
+</html>
