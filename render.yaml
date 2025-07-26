@@ -8,9 +8,6 @@ services:
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: ecommerce-db
+          name: ecommerce-db  # Replace with your Render DB name if different
           property: connectionString
-    buildFilter:
-      paths:
-        - ecommerce/*
     preDeployCommand: python manage.py migrate
