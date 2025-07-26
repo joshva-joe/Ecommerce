@@ -1,13 +1,12 @@
 services:
   - type: web
-    name: ecommerce
+    name: ecommerce  # Match this to your Render service name
     env: python
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn ecommerce.wsgi
-    autoDeploy: true
+    preDeployCommand: python manage.py migrate
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: ecommerce-db  # Replace with your Render DB name if different
+          name: ecommerce-db  # Replace with the name of your Render database
           property: connectionString
-    preDeployCommand: python manage.py migrate
