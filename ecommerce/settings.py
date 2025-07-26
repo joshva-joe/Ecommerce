@@ -95,6 +95,9 @@ DATABASES = {
     'default': dj_database_url.config(default=os.environ.get("DATABASE_URL"))
 }
 
+ALLOWED_HOSTS = ['ecommerce-y2h5.onrender.com', '127.0.0.1', 'localhost']
+
+
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
