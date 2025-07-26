@@ -1,13 +1,16 @@
 services:
   - type: web
-    name: ecommerce-app
+    name: ecommerce
     env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn ecommerce.wsgi:application
+    startCommand: gunicorn ecommerce.wsgi
+    autoDeploy: true
     envVars:
-      - key: DJANGO_SECRET_KEY
-        generateValue: true
-      - key: DEBUG
-        value: False
-      - key: ALLOWED_HOSTS
-        value: ecommerce-app.onrender.com
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ecommerce-db
+          property: connectionString
+    buildFilter:
+      paths:
+        - ecommerce/*
+    preDeployCommand: python manage.py migrate
