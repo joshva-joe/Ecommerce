@@ -92,7 +92,10 @@ MESSAGE_TAGS = {
 #     }
 # }
 DATABASES = {
-    'default': dj_database_url.config(default=os.environ.get("DATABASE_URL"))
+    'default': dj_database_url.config(
+        default='sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3'),
+        conn_max_age=600
+    )
 }
 
 ALLOWED_HOSTS = ['ecommerce-y2h5.onrender.com', '127.0.0.1', 'localhost']
